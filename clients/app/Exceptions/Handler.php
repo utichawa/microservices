@@ -2,8 +2,13 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -50,6 +55,37 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof ThrottleRequestsException) {
+            Log::error($exception->getMessage());
+
+            return responseApiReturn($exception->getStatusCode(), [], $exception->getMessage());
+        }
+
+        if ($exception instanceof NotFoundHttpException) {
+            Log::error($exception->getMessage());
+
+            return responseApiReturn(404, [], 'Data not found');
+        }
+
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            Log::error($exception->getMessage());
+
+            return responseApiReturn(404, [], 'Route not found');
+        }
+
+        if (config('app.env') != 'local') {
+            if ($exception instanceof Throwable) {
+                Log::error($exception->getMessage());
+
+                return responseApiReturn(500, [], 'System error');
+            }
+        }
+
         return parent::render($request, $exception);
+    }
+
+    protected function invalidJson($request, ValidationException $exception)
+    {
+        return responseApiReturn($exception->status, [], 'Validation failed', $exception->errors());
     }
 }
