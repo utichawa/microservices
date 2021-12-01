@@ -3,12 +3,12 @@
 return [
     'server' => [
         'eurekaDefaultUrl' => 'http://localhost:8761/eureka',
-        'hostName' => 'service.hamid.work',
-        'appName' => 'service',
+        'hostName' => 'clients_microservice',
+        'appName' => 'Client',
         'ip' => '127.0.0.1',
-        'port' => ['8080', true],
-        'homePageUrl' => 'http://localhost:8080',
-        'statusPageUrl' => 'http://localhost:8080/info',
-        'healthCheckUrl' => 'http://localhost:8080/health'
+        'port' => ['80', true],
+        'homePageUrl' => 'http://localhost:80',
+        'statusPageUrl' => 'http://localhost:80/info',
+        'healthCheckUrl' => 'http://localhost:80/health'
     ]
 ];
