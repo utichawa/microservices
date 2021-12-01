@@ -1,0 +1,588 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Clients API docs",
+        "description": "This is Clients API documentation",
+        "contact": {
+            "email": "yassine.mechiche@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost/microservices/clients/public"
+        }
+    ],
+    "paths": {
+        "/api/clients": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Get list of clients",
+                "description": "Get list of clients",
+                "operationId": "listClients",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/listClientResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseError"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity (validation failed)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseErrorValidation"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "General server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Add a client",
+                "description": "Add a client",
+                "operationId": "AddClient",
+                "requestBody": {
+                    "description": "Add a client",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "description": "Nom",
+                                        "type": "string"
+                                    },
+                                    "last_name": {
+                                        "description": "Prénom",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Email",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "login": {
+                                        "description": "Login",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "Mot de passe",
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "description": "Téléphone",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Basic"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseError"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity (validation failed)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseErrorValidation"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "General server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/clients/{id}": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Get client details",
+                "description": "Get client details",
+                "operationId": "clientDetail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Client id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/detailClientResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseError"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity (validation failed)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseErrorValidation"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "General server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Update a client",
+                "description": "Update a client",
+                "operationId": "UpdateClient",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Client id",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update a client",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "description": "Nom",
+                                        "type": "string"
+                                    },
+                                    "last_name": {
+                                        "description": "Prénom",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Email",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "login": {
+                                        "description": "Login",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "Mot de passe",
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "description": "Téléphone",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Basic"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseError"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity (validation failed)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseErrorValidation"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "General server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Delete a client",
+                "description": "Delete a client",
+                "operationId": "deleteUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Client id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Basic"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseError"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity (validation failed)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseErrorValidation"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "General server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ApiResponseError": {
+                "required": [
+                    "base_url",
+                    "status",
+                    "message",
+                    "status_code"
+                ],
+                "properties": {
+                    "base_url": {
+                        "type": "string",
+                        "format": "url"
+                    },
+                    "status": {
+                        "type": "boolean",
+                        "default": "false"
+                    },
+                    "status_code": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ApiResponseErrorValidation": {
+                "required": [
+                    "base_url",
+                    "status",
+                    "message",
+                    "status_code"
+                ],
+                "properties": {
+                    "base_url": {
+                        "type": "string",
+                        "format": "url"
+                    },
+                    "status": {
+                        "type": "boolean",
+                        "default": "false"
+                    },
+                    "status_code": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "errors": {
+                        "properties": {
+                            "field_one": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "field_two": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ApiResponseSuccess": {
+                "required": [
+                    "base_url",
+                    "status",
+                    "message"
+                ],
+                "properties": {
+                    "base_url": {
+                        "type": "string",
+                        "format": "url"
+                    },
+                    "status": {
+                        "type": "boolean",
+                        "default": "true"
+                    },
+                    "status_code": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "OK"
+                    },
+                    "data": {
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "Basic": {
+                "required": [
+                    "base_url",
+                    "status",
+                    "message"
+                ],
+                "properties": {
+                    "base_url": {
+                        "type": "string",
+                        "format": "url"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    },
+                    "status_code": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "detailClientResponse": {
+                "required": [
+                    "base_url",
+                    "status",
+                    "message",
+                    "data"
+                ],
+                "properties": {
+                    "base_url": {
+                        "type": "string",
+                        "format": "url"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    },
+                    "status_code": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/ClientModel"
+                    }
+                },
+                "type": "object"
+            },
+            "listClientResponse": {
+                "required": [
+                    "base_url",
+                    "status",
+                    "message",
+                    "data"
+                ],
+                "properties": {
+                    "base_url": {
+                        "type": "string",
+                        "format": "url"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    },
+                    "status_code": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ClientModel"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ClientModel": {
+                "properties": {
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "login": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Clients",
+            "description": "Clients routes"
+        }
+    ],
+    "security": [
+        []
+    ]
+}

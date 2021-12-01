@@ -23,7 +23,7 @@ class UpdateClientRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route()->parameter('id');
+        $id = $this->route()->parameter('client');
 
         return [
             'first_name' => 'required',
