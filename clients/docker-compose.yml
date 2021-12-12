@@ -1,0 +1,59 @@
+version: '3'
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+
+services:
+  # Web Server
+  web:
+    build:
+      context: ./.docker/nginx
+      args:
+        - PHP_UPSTREAM_CONTAINER=${NGINX_PHP_UPSTREAM_CONTAINER:-app}
+        - PHP_UPSTREAM_PORT=${NGINX_PHP_UPSTREAM_PORT:-9000}
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    volumes:
+      - ./:/var/www
+      - ./storage/logs/nginx/:/var/log/nginx
+      - ./.docker/nginx/sites/:/etc/nginx/sites-available
+      - ./.docker/nginx/ssl/:/etc/nginx/ssl
+    ports:
+      - "80:80"
+      - "443:443"
+      - "81:81"
+    depends_on:
+      - app
+    networks:
+      - frontend
+      - backend
+  # Server Application Programming Interface
+  app:
+    build:
+      context: ./.docker/php-fpm
+    volumes:
+      - ./:/var/www
+    working_dir: /var/www
+    expose:
+      - "9000"
+    networks:
+      - backend
+    depends_on:
+      - database
+  # Database
+  database:
+    build:
+      context: ./.docker/postgres-postgis
+    ports:
+      - "${DB_PORT}:5432"
+    environment:
+      - POSTGRES_DB=${DB_DATABASE}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    networks:
+      - backend
+
