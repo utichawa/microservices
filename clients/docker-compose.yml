@@ -1,59 +1,64 @@
-version: '3'
-
-networks:
-  frontend:
-    driver: bridge
-  backend:
-    driver: bridge
-
+version: "3.7"
 services:
-  # Web Server
-  web:
-    build:
-      context: ./.docker/nginx
-      args:
-        - PHP_UPSTREAM_CONTAINER=${NGINX_PHP_UPSTREAM_CONTAINER:-app}
-        - PHP_UPSTREAM_PORT=${NGINX_PHP_UPSTREAM_PORT:-9000}
-        - http_proxy
-        - https_proxy
-        - no_proxy
-    volumes:
-      - ./:/var/www
-      - ./storage/logs/nginx/:/var/log/nginx
-      - ./.docker/nginx/sites/:/etc/nginx/sites-available
-      - ./.docker/nginx/ssl/:/etc/nginx/ssl
-    ports:
-      - "80:80"
-      - "443:443"
-      - "81:81"
-    depends_on:
-      - app
-    networks:
-      - frontend
-      - backend
-  # Server Application Programming Interface
   app:
     build:
-      context: ./.docker/php-fpm
+      args:
+        user: yassine
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: clients
+    container_name: clients-app
+    restart: unless-stopped
+    working_dir: /var/www/
     volumes:
       - ./:/var/www
-    working_dir: /var/www
-    expose:
-      - "9000"
     networks:
-      - backend
-    depends_on:
-      - database
-  # Database
-  database:
-    build:
-      context: ./.docker/postgres-postgis
-    ports:
-      - "${DB_PORT}:5432"
+      - clients
+  db:
+    image: mysql:5.7
+    container_name: clients-db
+    restart: unless-stopped
     environment:
-      - POSTGRES_DB=${DB_DATABASE}
-      - POSTGRES_USER=${DB_USERNAME}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
     networks:
-      - backend
+      - clients
+  nginx:
+    image: nginx:1.17-alpine
+    container_name: clients-nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+    networks:
+      - clients
+  # Eureuka server
+  discovery:
+    build:  ../EurekaServer
+    ports:
+      - "8761:8761"
+    image: "eureuka-server"
+    networks:
+      - clients
+  gateway:
+    build: ../Zuul-Gateway
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka/
+    ports:
+      - "8763:8763"
+    image: "gateway-server"
+    networks:
+      - clients
 
+networks:
+  clients:
+    driver: bridge

@@ -28,6 +28,7 @@ services:
       - "81:81"
     depends_on:
       - app_clients
+    image: "web-image"
     networks:
       - frontend
       - backend
@@ -42,6 +43,9 @@ services:
       - "9000"
     networks:
       - backend
+    image: "app-image"
+    ports:
+      - "8762:8762"
     depends_on:
       - database_clients
   # Database
@@ -54,33 +58,21 @@ services:
       - POSTGRES_DB=clients
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
+    image: "db-image"
     networks:
       - backend
   # Eureuka server
   discovery:
-    build: ./discovery-server
+    build: ./EurekaServer
     ports:
       - "8761:8761"
-    image: "discovery-server"
-  config:
-    build: ./config-server
-    command: --spring.profiles.active=native --spring.cloud.config.server.native.searchLocations=/config
-    volumes:
-      - type: bind
-        source: ./src/main/resources/centralRepo
-        target: /config
-    environment: 
-      - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka/
-      - spring.profiles.active=native
-    ports:
-      - "8888:8888"
-    image: "config-server"
+    image: "eureka-server"
   # Zuul server
   gateway:
-    build: ./zuul-server
+    build: ./Zuul-Gateway
     environment: 
       - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka/
     ports:
-      - "8762:8762"
-    image: "gateway-server"
+      - "8763:8763"
+    image: "zuul-gateway"
 
