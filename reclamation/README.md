@@ -1,4 +1,4 @@
-# Client Endpoint
+# Reclamation Endpoint
 
 ## Installation 
 
