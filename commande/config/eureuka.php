@@ -3,8 +3,8 @@
 return [
     'server' => [
         'eurekaDefaultUrl' => 'http://localhost:8761/eureka/',
-        'hostName' => 'client-service',
-        'appName' => 'client-service',
+        'hostName' => 'commande-service',
+        'appName' => 'commande-service',
         'ip' => 'localhost',
         'port' => ['8000', true],
         'homePageUrl' => 'http://localhost:8000',

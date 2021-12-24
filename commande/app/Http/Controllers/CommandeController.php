@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreClientRequest;
-use App\Http\Requests\UpdateClientRequest;
-use App\Models\Client;
+use App\Http\Requests\StoreCommandeRequest;
+use App\Http\Requests\UpdateCommandeRequest;
+use App\Models\Commande;
 
 class CommandeController extends Controller
 {
     /**
-     * Get list of clients
+     * Get list of commandes
      *
      * @OA\Get(
-     *     path="/api/clients",
-     *     tags={"Clients"},
-     *     operationId="listClients",
-     *     summary="Get list of clients",
+     *     path="/api/commandes",
+     *     tags={"Commandes"},
+     *     operationId="listCommandes",
+     *     summary="Get list of commandes",
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(
      *              type="object",
-     *              ref="#/components/schemas/listClientResponse"
+     *              ref="#/components/schemas/listCommandeResponse"
      *         ),
      *     ),
      *     @OA\Response(
@@ -52,21 +52,21 @@ class CommandeController extends Controller
      */
     public function index()
     {
-        $clients = Client::get();
+        $commandes = Commande::get();
 
-        return responseApiReturn(200, $clients);
+        return responseApiReturn(200, $commandes);
     }
 
     /**
-     * Add a client
+     * Add a commande
      *
      * @OA\POST(
-     *     path="/api/clients",
-     *     tags={"Clients"},
-     *     operationId="AddClient",
-     *     summary="Add a client",
+     *     path="/api/commandes",
+     *     tags={"Commandes"},
+     *     operationId="AddCommande",
+     *     summary="Add a commande",
      *     @OA\RequestBody(
-     *         description="Add a client",
+     *         description="Add a commande",
      *         required=true,
      *         @OA\MediaType(
      *             mediaType="application/json",
@@ -139,33 +139,33 @@ class CommandeController extends Controller
      *     )
      * )
      */
-    public function store(StoreClientRequest $request)
+    public function store(StoreCommandeRequest $request)
     {
-        Client::create($request->all());
+        Commande::create($request->all());
 
-        return responseApiReturn(200, [], 'Client créer avec succées');
+        return responseApiReturn(200, [], 'Commande créer avec succées');
     }
 
     /**
-     * Get client details
+     * Get commande details
      *
      * @OA\Get(
-     *     path="/api/clients/{id}",
-     *     tags={"Clients"},
-     *     operationId="clientDetail",
-     *     summary="Get client details",
+     *     path="/api/commandes/{id}",
+     *     tags={"Commandes"},
+     *     operationId="commandeDetail",
+     *     summary="Get commande details",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="Client id",
+     *         description="Commande id",
      *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(
      *              type="object",
-     *              ref="#/components/schemas/detailClientResponse"
+     *              ref="#/components/schemas/detailCommandeResponse"
      *         ),
      *     ),
      *     @OA\Response(
@@ -196,31 +196,31 @@ class CommandeController extends Controller
      */
     public function show($id)
     {
-        $client = Client::find($id);
+        $commande = Commande::find($id);
 
-        if ($client) {
-            return responseApiReturn(200, $client);
+        if ($commande) {
+            return responseApiReturn(200, $commande);
         }
 
-        return responseApiReturn(404, [], 'Client non trouvée');
+        return responseApiReturn(404, [], 'Commande non trouvée');
     }
 
     /**
-     * Update a client
+     * Update a commande
      *
      * @OA\PUT(
-     *     path="/api/clients/{id}",
-     *     tags={"Clients"},
-     *     operationId="UpdateClient",
-     *     summary="Update a client",
+     *     path="/api/commandes/{id}",
+     *     tags={"Commandes"},
+     *     operationId="UpdateCommande",
+     *     summary="Update a commande",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="Client id",
+     *         description="Commande id",
      *     ),
      *     @OA\RequestBody(
-     *         description="Update a client",
+     *         description="Update a commande",
      *         required=true,
      *         @OA\MediaType(
      *             mediaType="application/json",
@@ -293,32 +293,32 @@ class CommandeController extends Controller
      *     )
      * )
      */
-    public function update($id, UpdateClientRequest $request)
+    public function update($id, UpdateCommandeRequest $request)
     {
-        $client = Client::find($id);
+        $commande = Commande::find($id);
 
-        if ($client) {
-            $client->update($request->all());
+        if ($commande) {
+            $commande->update($request->all());
 
             return responseApiReturn(200, [], 'Mise à jour effectué avec succées');
         }
 
-        return responseApiReturn(404, [], 'Client non trouvée');
+        return responseApiReturn(404, [], 'Commande non trouvée');
     }
 
     /**
-     * Delete a client
+     * Delete a commande
      *
      * @OA\DELETE(
-     *     path="/api/clients/{id}",
-     *     tags={"Clients"},
+     *     path="/api/commandes/{id}",
+     *     tags={"Commandes"},
      *     operationId="deleteUser",
-     *     summary="Delete a client",
+     *     summary="Delete a commande",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="Client id",
+     *         description="Commande id",
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -356,14 +356,14 @@ class CommandeController extends Controller
      */
     public function destroy($id)
     {
-        $client = Client::find($id);
+        $commande = Commande::find($id);
 
-        if ($client) {
-            $client->delete();
+        if ($commande) {
+            $commande->delete();
 
-            return responseApiReturn(200, [], 'Client supprimer avec succées');
+            return responseApiReturn(200, [], 'Commande supprimer avec succées');
         }
 
-        return responseApiReturn(404, [], 'Client non trouvée');
+        return responseApiReturn(404, [], 'Commande non trouvée');
     }
 }

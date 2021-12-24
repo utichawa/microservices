@@ -2,7 +2,7 @@
 
 /**
  * @OA\Schema(
- *   schema="listClientResponse",
+ *   schema="listCommandeResponse",
  *   required={"base_url", "status", "message", "data"},
  *   type="object",
  *   @OA\Property(
@@ -25,7 +25,7 @@
  *     @OA\Property(
  *          property="data",
  *          type="array",
- *          @OA\Items(ref="#/components/schemas/ClientModel")
+ *          @OA\Items(ref="#/components/schemas/CommandeModel")
  *     )
  * )
  */
