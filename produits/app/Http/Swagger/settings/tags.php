@@ -1,7 +1,7 @@
 <?php
 /**
  * @OA\Tag(
- *     name="Clients",
- *     description="Clients routes",
+ *     name="Products",
+ *     description="Products routes",
  * )
 **/

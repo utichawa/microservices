@@ -2,26 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreClientRequest;
-use App\Http\Requests\UpdateClientRequest;
-use App\Models\Client;
+use App\Http\Requests\ProductRequest;
+use App\Models\Product;
 
-class ClientController extends Controller
+class ProductController extends Controller
 {
     /**
-     * Get list of clients
+     * Get list of products
      *
      * @OA\Get(
-     *     path="/api/clients",
-     *     tags={"Clients"},
-     *     operationId="listClients",
-     *     summary="Get list of clients",
+     *     path="/api/products",
+     *     tags={"Products"},
+     *     operationId="listProducts",
+     *     summary="Get list of products",
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(
      *              type="object",
-     *              ref="#/components/schemas/listClientResponse"
+     *              ref="#/components/schemas/listProductResponse"
      *         ),
      *     ),
      *     @OA\Response(
@@ -52,56 +51,43 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::get();
+        $products = Product::get();
 
-        return responseApiReturn(200, $clients);
+        return responseApiReturn(200, $products);
     }
 
     /**
-     * Add a client
+     * Add a product
      *
      * @OA\POST(
-     *     path="/api/clients",
-     *     tags={"Clients"},
-     *     operationId="AddClient",
-     *     summary="Add a client",
+     *     path="/api/products",
+     *     tags={"Products"},
+     *     operationId="AddProduct",
+     *     summary="Add a product",
      *     @OA\RequestBody(
-     *         description="Add a client",
+     *         description="Add a product",
      *         required=true,
      *         @OA\MediaType(
      *             mediaType="application/json",
      *             @OA\Schema(
      *                  @OA\Property(
-     *                      property="first_name",
+     *                      property="name",
      *                      type="string",
      *                      description="Nom",
      *                  ),
      *                  @OA\Property(
-     *                      property="last_name",
+     *                      property="description",
      *                      type="string",
-     *                      description="Prénom",
+     *                      description="Description",
      *                  ),
      *                  @OA\Property(
-     *                      property="email",
-     *                      type="string",
-     *                      format="email",
-     *                      description="Email",
+     *                      property="is_active",
+     *                      type="boolean",
      *                  ),
      *                  @OA\Property(
-     *                      property="login",
-     *                      type="string",
-     *                      description="Login",
-     *                  ),
-     *                  @OA\Property(
-     *                      property="password",
-     *                      type="string",
-     *                      description="Mot de passe",
-     *                  ),
-     *                  @OA\Property(
-     *                      property="phone",
-     *                      type="string",
-     *                      description="Téléphone",
-     *                  ),
+     *                      property="quantity_in_stock",
+     *                      type="integer",
+     *                  )
      *             ),
      *         ),
      *     ),
@@ -139,33 +125,33 @@ class ClientController extends Controller
      *     )
      * )
      */
-    public function store(StoreClientRequest $request)
+    public function store(ProductRequest $request)
     {
-        Client::create($request->all());
+        Product::create($request->all());
 
-        return responseApiReturn(200, [], 'Client créer avec succées');
+        return responseApiReturn(200, [], 'Product créer avec succées');
     }
 
     /**
-     * Get client details
+     * Get product details
      *
      * @OA\Get(
-     *     path="/api/clients/{id}",
-     *     tags={"Clients"},
-     *     operationId="clientDetail",
-     *     summary="Get client details",
+     *     path="/api/products/{id}",
+     *     tags={"Products"},
+     *     operationId="productDetail",
+     *     summary="Get product details",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="Client id",
+     *         description="Product id",
      *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(
      *              type="object",
-     *              ref="#/components/schemas/detailClientResponse"
+     *              ref="#/components/schemas/detailProductResponse"
      *         ),
      *     ),
      *     @OA\Response(
@@ -196,66 +182,53 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        $client = Client::find($id);
+        $product = Product::find($id);
 
-        if ($client) {
-            return responseApiReturn(200, $client);
+        if ($product) {
+            return responseApiReturn(200, $product);
         }
 
-        return responseApiReturn(404, [], 'Client non trouvée');
+        return responseApiReturn(404, [], 'Product non trouvée');
     }
 
     /**
-     * Update a client
+     * Update a product
      *
      * @OA\PUT(
-     *     path="/api/clients/{id}",
-     *     tags={"Clients"},
-     *     operationId="UpdateClient",
-     *     summary="Update a client",
+     *     path="/api/products/{id}",
+     *     tags={"Products"},
+     *     operationId="UpdateProduct",
+     *     summary="Update a product",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="Client id",
+     *         description="Product id",
      *     ),
      *     @OA\RequestBody(
-     *         description="Update a client",
+     *         description="Update a product",
      *         required=true,
      *         @OA\MediaType(
      *             mediaType="application/json",
      *             @OA\Schema(
      *                  @OA\Property(
-     *                      property="first_name",
+     *                      property="name",
      *                      type="string",
      *                      description="Nom",
      *                  ),
      *                  @OA\Property(
-     *                      property="last_name",
+     *                      property="description",
      *                      type="string",
-     *                      description="Prénom",
+     *                      description="Description",
      *                  ),
      *                  @OA\Property(
-     *                      property="email",
-     *                      type="string",
-     *                      format="email",
-     *                      description="Email",
+     *                      property="is_active",
+     *                      type="boolean",
      *                  ),
      *                  @OA\Property(
-     *                      property="login",
-     *                      type="string",
-     *                      description="Login",
-     *                  ),
-     *                  @OA\Property(
-     *                      property="password",
-     *                      type="string",
-     *                      description="Mot de passe",
-     *                  ),
-     *                  @OA\Property(
-     *                      property="phone",
-     *                      type="string",
-     *                      description="Téléphone",
-     *                  ),
+     *                      property="quantity_in_stock",
+     *                      type="integer",
+     *                  )
      *             ),
      *         ),
      *     ),
@@ -293,32 +266,32 @@ class ClientController extends Controller
      *     )
      * )
      */
-    public function update($id, UpdateClientRequest $request)
+    public function update($id, ProductRequest $request)
     {
-        $client = Client::find($id);
+        $product = Product::find($id);
 
-        if ($client) {
-            $client->update($request->all());
+        if ($product) {
+            $product->update($request->all());
 
             return responseApiReturn(200, [], 'Mise à jour effectué avec succées');
         }
 
-        return responseApiReturn(404, [], 'Client non trouvée');
+        return responseApiReturn(404, [], 'Product non trouvée');
     }
 
     /**
-     * Delete a client
+     * Delete a product
      *
      * @OA\DELETE(
-     *     path="/api/clients/{id}",
-     *     tags={"Clients"},
+     *     path="/api/products/{id}",
+     *     tags={"Products"},
      *     operationId="deleteUser",
-     *     summary="Delete a client",
+     *     summary="Delete a product",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="Client id",
+     *         description="Product id",
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -356,14 +329,14 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        $client = Client::find($id);
+        $product = Product::find($id);
 
-        if ($client) {
-            $client->delete();
+        if ($product) {
+            $product->delete();
 
-            return responseApiReturn(200, [], 'Client supprimer avec succées');
+            return responseApiReturn(200, [], 'Product supprimer avec succées');
         }
 
-        return responseApiReturn(404, [], 'Client non trouvée');
+        return responseApiReturn(404, [], 'Product non trouvée');
     }
 }
