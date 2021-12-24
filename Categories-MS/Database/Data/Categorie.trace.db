@@ -1,0 +1,6 @@
+2021-12-23 16:51:03 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (CATEGORIE: ""ID"" INTEGER NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."CATEGORIE"("ID","DESCRIPTION","NAME")VALUES(?,?,?) [22018-200]
+2021-12-23 16:51:03 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (CATEGORIE: ""ID"" INTEGER NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."CATEGORIE"("ID","DESCRIPTION","NAME")VALUES(?,?,?) [22018-200]

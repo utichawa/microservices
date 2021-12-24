@@ -1,4 +1,4 @@
-FROM java:8
-EXPOSE 8095
-ADD /target/EurekaServer-0.0.1-SNAPSHOT.jar EurekaServer.jar
-ENTRYPOINT ["java", "-jar", "EurekaServer.jar"]
+FROM openjdk:8-jdk-alpine
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app1.jar
+ENTRYPOINT ["java","-jar","/app1.jar"]

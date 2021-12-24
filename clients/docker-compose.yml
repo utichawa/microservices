@@ -1,21 +1,24 @@
-version: "3.7"
+version: "3.9"
 services:
-  app:
+  app_clients:
     build:
       args:
         user: yassine
         uid: 1000
       context: ./
       dockerfile: Dockerfile
-    image: clients
+    image: client-service
     container_name: clients-app
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
       - ./:/var/www
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka/
+      - spring.cloud.config.uri=http://config:8888
     networks:
-      - clients
-  db:
+      - backend
+  db_mysql:
     image: mysql:5.7
     container_name: clients-db
     restart: unless-stopped
@@ -29,7 +32,7 @@ services:
     volumes:
       - ./docker-compose/mysql:/docker-entrypoint-initdb.d
     networks:
-      - clients
+      - backend
   nginx:
     image: nginx:1.17-alpine
     container_name: clients-nginx
@@ -39,26 +42,69 @@ services:
     volumes:
       - ./:/var/www
       - ./docker-compose/nginx:/etc/nginx/conf.d
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka/
+      - spring.cloud.config.uri=http://config:8888
     networks:
-      - clients
+      - backend
   # Eureuka server
-  discovery:
-    build:  ../EurekaServer
+  Eureka:
+    container_name: serviceregistry
+    build: ../EurekaServer
     ports:
       - "8761:8761"
-    image: "eureuka-server"
+    hostname: serviceregistry
+    image: "eureka"
+    environment:
+     - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
     networks:
-      - clients
+      - backend
+  categorie:
+    container_name: categorie
+    build: ../Categories-MS
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka/
+      - spring.cloud.config.uri=http://config:8888
+    ports:
+      - "8085:8085"
+    image: "categorie-service"
+    hostname: categorie
+    depends_on:
+     - Eureka
+    networks:
+      - backend
+  config:
+    container_name: configuration
+    build: ../config-server
+    command: --spring.profiles.active=native --spring.cloud.config.server.native.searchLocations=/config
+    volumes:
+      - type: bind
+        source: ../config-server/src/main/resources/centralRepo
+        target: /config
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka/
+      - spring.profiles.active=native
+    ports:
+      - "8888:8888"
+    image: "config-server"
+    hostname: config
+    depends_on:
+     - Eureka
+    networks:
+      - backend
   gateway:
     build: ../Zuul-Gateway
     environment:
-      - eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka/
+      - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka/
     ports:
       - "8763:8763"
     image: "gateway-server"
+    hostname: gateway
+    depends_on:
+     - Eureka
     networks:
-      - clients
+      - backend
 
 networks:
-  clients:
+  backend:
     driver: bridge
