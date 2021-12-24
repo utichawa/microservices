@@ -1,4 +1,4 @@
-# Client Endpoint
+# Commande Endpoint
 
 ## Installation 
 
