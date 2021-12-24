@@ -2,26 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreClientRequest;
-use App\Http\Requests\UpdateClientRequest;
-use App\Models\Client;
+use App\Http\Requests\ReclamationRequest;
+use App\Models\Reclamation;
 
-class ClientController extends Controller
+class ReclamationController extends Controller
 {
     /**
-     * Get list of clients
+     * Get list of reclamations
      *
      * @OA\Get(
-     *     path="/api/clients",
-     *     tags={"Clients"},
-     *     operationId="listClients",
-     *     summary="Get list of clients",
+     *     path="/api/reclamations",
+     *     tags={"Reclamations"},
+     *     operationId="listReclamations",
+     *     summary="Get list of reclamations",
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(
      *              type="object",
-     *              ref="#/components/schemas/listClientResponse"
+     *              ref="#/components/schemas/listReclamationResponse"
      *         ),
      *     ),
      *     @OA\Response(
@@ -52,55 +51,40 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::get();
+        $reclamations = Reclamation::get();
 
-        return responseApiReturn(200, $clients);
+        return responseApiReturn(200, $reclamations);
     }
 
     /**
-     * Add a client
+     * Add a reclamation
      *
      * @OA\POST(
-     *     path="/api/clients",
-     *     tags={"Clients"},
-     *     operationId="AddClient",
-     *     summary="Add a client",
+     *     path="/api/reclamations",
+     *     tags={"Reclamations"},
+     *     operationId="AddReclamation",
+     *     summary="Add a reclamation",
      *     @OA\RequestBody(
-     *         description="Add a client",
+     *         description="Add a reclamation",
      *         required=true,
      *         @OA\MediaType(
      *             mediaType="application/json",
      *             @OA\Schema(
      *                  @OA\Property(
-     *                      property="first_name",
-     *                      type="string",
-     *                      description="Nom",
-     *                  ),
-     *                  @OA\Property(
-     *                      property="last_name",
-     *                      type="string",
-     *                      description="Prénom",
-     *                  ),
-     *                  @OA\Property(
      *                      property="email",
      *                      type="string",
-     *                      format="email",
-     *                      description="Email",
-     *                  ),
-     *                  @OA\Property(
-     *                      property="login",
-     *                      type="string",
-     *                      description="Login",
-     *                  ),
-     *                  @OA\Property(
-     *                      property="password",
-     *                      type="string",
-     *                      description="Mot de passe",
      *                  ),
      *                  @OA\Property(
      *                      property="phone",
      *                      type="string",
-     *                      description="Téléphone",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="subject",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
      *                  ),
      *             ),
      *         ),
@@ -139,33 +123,33 @@ class ClientController extends Controller
      *     )
      * )
      */
-    public function store(StoreClientRequest $request)
+    public function store(ReclamationRequest $request)
     {
-        Client::create($request->all());
+        Reclamation::create($request->all());
 
-        return responseApiReturn(200, [], 'Client créer avec succées');
+        return responseApiReturn(200, [], 'Reclamation créer avec succées');
     }
 
     /**
-     * Get client details
+     * Get reclamation details
      *
      * @OA\Get(
-     *     path="/api/clients/{id}",
-     *     tags={"Clients"},
-     *     operationId="clientDetail",
-     *     summary="Get client details",
+     *     path="/api/reclamations/{id}",
+     *     tags={"Reclamations"},
+     *     operationId="reclamationDetail",
+     *     summary="Get reclamation details",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="Client id",
+     *         description="Reclamation id",
      *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(
      *              type="object",
-     *              ref="#/components/schemas/detailClientResponse"
+     *              ref="#/components/schemas/detailReclamationResponse"
      *         ),
      *     ),
      *     @OA\Response(
@@ -196,65 +180,50 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        $client = Client::find($id);
+        $reclamation = Reclamation::find($id);
 
-        if ($client) {
-            return responseApiReturn(200, $client);
+        if ($reclamation) {
+            return responseApiReturn(200, $reclamation);
         }
 
-        return responseApiReturn(404, [], 'Client non trouvée');
+        return responseApiReturn(404, [], 'Reclamation non trouvée');
     }
 
     /**
-     * Update a client
+     * Update a reclamation
      *
      * @OA\PUT(
-     *     path="/api/clients/{id}",
-     *     tags={"Clients"},
-     *     operationId="UpdateClient",
-     *     summary="Update a client",
+     *     path="/api/reclamations/{id}",
+     *     tags={"Reclamations"},
+     *     operationId="UpdateReclamation",
+     *     summary="Update a reclamation",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="Client id",
+     *         description="Reclamation id",
      *     ),
      *     @OA\RequestBody(
-     *         description="Update a client",
+     *         description="Update a reclamation",
      *         required=true,
      *         @OA\MediaType(
      *             mediaType="application/json",
      *             @OA\Schema(
      *                  @OA\Property(
-     *                      property="first_name",
-     *                      type="string",
-     *                      description="Nom",
-     *                  ),
-     *                  @OA\Property(
-     *                      property="last_name",
-     *                      type="string",
-     *                      description="Prénom",
-     *                  ),
-     *                  @OA\Property(
      *                      property="email",
      *                      type="string",
-     *                      format="email",
-     *                      description="Email",
-     *                  ),
-     *                  @OA\Property(
-     *                      property="login",
-     *                      type="string",
-     *                      description="Login",
-     *                  ),
-     *                  @OA\Property(
-     *                      property="password",
-     *                      type="string",
-     *                      description="Mot de passe",
      *                  ),
      *                  @OA\Property(
      *                      property="phone",
      *                      type="string",
-     *                      description="Téléphone",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="subject",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string",
      *                  ),
      *             ),
      *         ),
@@ -293,32 +262,32 @@ class ClientController extends Controller
      *     )
      * )
      */
-    public function update($id, UpdateClientRequest $request)
+    public function update($id, ReclamationRequest $request)
     {
-        $client = Client::find($id);
+        $reclamation = Reclamation::find($id);
 
-        if ($client) {
-            $client->update($request->all());
+        if ($reclamation) {
+            $reclamation->update($request->all());
 
             return responseApiReturn(200, [], 'Mise à jour effectué avec succées');
         }
 
-        return responseApiReturn(404, [], 'Client non trouvée');
+        return responseApiReturn(404, [], 'Reclamation non trouvée');
     }
 
     /**
-     * Delete a client
+     * Delete a reclamation
      *
      * @OA\DELETE(
-     *     path="/api/clients/{id}",
-     *     tags={"Clients"},
+     *     path="/api/reclamations/{id}",
+     *     tags={"Reclamations"},
      *     operationId="deleteUser",
-     *     summary="Delete a client",
+     *     summary="Delete a reclamation",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
-     *         description="Client id",
+     *         description="Reclamation id",
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -356,14 +325,14 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        $client = Client::find($id);
+        $reclamation = Reclamation::find($id);
 
-        if ($client) {
-            $client->delete();
+        if ($reclamation) {
+            $reclamation->delete();
 
-            return responseApiReturn(200, [], 'Client supprimer avec succées');
+            return responseApiReturn(200, [], 'Reclamation supprimer avec succées');
         }
 
-        return responseApiReturn(404, [], 'Client non trouvée');
+        return responseApiReturn(404, [], 'Reclamation non trouvée');
     }
 }

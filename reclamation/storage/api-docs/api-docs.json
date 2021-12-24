@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Clients API docs",
-        "description": "This is Clients API documentation",
+        "title": "Reclamation API docs",
+        "description": "This is Reclamation API documentation",
         "contact": {
             "email": "yassine.mechiche@gmail.com"
         },
@@ -14,25 +14,25 @@
     },
     "servers": [
         {
-            "url": "http://localhost/microservices/clients/public"
+            "url": "http://localhost/microservices/reclamation/public"
         }
     ],
     "paths": {
-        "/api/clients": {
+        "/api/reclamations": {
             "get": {
                 "tags": [
-                    "Clients"
+                    "Reclamations"
                 ],
-                "summary": "Get list of clients",
-                "description": "Get list of clients",
-                "operationId": "listClients",
+                "summary": "Get list of reclamations",
+                "description": "Get list of reclamations",
+                "operationId": "listReclamations",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/listClientResponse"
+                                    "$ref": "#/components/schemas/listReclamationResponse"
                                 }
                             }
                         }
@@ -71,41 +71,28 @@
             },
             "post": {
                 "tags": [
-                    "Clients"
+                    "Reclamations"
                 ],
-                "summary": "Add a client",
-                "description": "Add a client",
-                "operationId": "AddClient",
+                "summary": "Add a reclamation",
+                "description": "Add a reclamation",
+                "operationId": "AddReclamation",
                 "requestBody": {
-                    "description": "Add a client",
+                    "description": "Add a reclamation",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "first_name": {
-                                        "description": "Nom",
-                                        "type": "string"
-                                    },
-                                    "last_name": {
-                                        "description": "Prénom",
-                                        "type": "string"
-                                    },
                                     "email": {
-                                        "description": "Email",
-                                        "type": "string",
-                                        "format": "email"
-                                    },
-                                    "login": {
-                                        "description": "Login",
-                                        "type": "string"
-                                    },
-                                    "password": {
-                                        "description": "Mot de passe",
                                         "type": "string"
                                     },
                                     "phone": {
-                                        "description": "Téléphone",
+                                        "type": "string"
+                                    },
+                                    "subject": {
+                                        "type": "string"
+                                    },
+                                    "message": {
                                         "type": "string"
                                     }
                                 },
@@ -158,19 +145,19 @@
                 }
             }
         },
-        "/api/clients/{id}": {
+        "/api/reclamations/{id}": {
             "get": {
                 "tags": [
-                    "Clients"
+                    "Reclamations"
                 ],
-                "summary": "Get client details",
-                "description": "Get client details",
-                "operationId": "clientDetail",
+                "summary": "Get reclamation details",
+                "description": "Get reclamation details",
+                "operationId": "reclamationDetail",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Client id",
+                        "description": "Reclamation id",
                         "required": true
                     }
                 ],
@@ -180,7 +167,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/detailClientResponse"
+                                    "$ref": "#/components/schemas/detailReclamationResponse"
                                 }
                             }
                         }
@@ -219,49 +206,36 @@
             },
             "put": {
                 "tags": [
-                    "Clients"
+                    "Reclamations"
                 ],
-                "summary": "Update a client",
-                "description": "Update a client",
-                "operationId": "UpdateClient",
+                "summary": "Update a reclamation",
+                "description": "Update a reclamation",
+                "operationId": "UpdateReclamation",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Client id",
+                        "description": "Reclamation id",
                         "required": true
                     }
                 ],
                 "requestBody": {
-                    "description": "Update a client",
+                    "description": "Update a reclamation",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "first_name": {
-                                        "description": "Nom",
-                                        "type": "string"
-                                    },
-                                    "last_name": {
-                                        "description": "Prénom",
-                                        "type": "string"
-                                    },
                                     "email": {
-                                        "description": "Email",
-                                        "type": "string",
-                                        "format": "email"
-                                    },
-                                    "login": {
-                                        "description": "Login",
-                                        "type": "string"
-                                    },
-                                    "password": {
-                                        "description": "Mot de passe",
                                         "type": "string"
                                     },
                                     "phone": {
-                                        "description": "Téléphone",
+                                        "type": "string"
+                                    },
+                                    "subject": {
+                                        "type": "string"
+                                    },
+                                    "message": {
                                         "type": "string"
                                     }
                                 },
@@ -315,16 +289,16 @@
             },
             "delete": {
                 "tags": [
-                    "Clients"
+                    "Reclamations"
                 ],
-                "summary": "Delete a client",
-                "description": "Delete a client",
+                "summary": "Delete a reclamation",
+                "description": "Delete a reclamation",
                 "operationId": "deleteUser",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Client id",
+                        "description": "Reclamation id",
                         "required": true
                     }
                 ],
@@ -493,7 +467,7 @@
                 },
                 "type": "object"
             },
-            "detailClientResponse": {
+            "detailReclamationResponse": {
                 "required": [
                     "base_url",
                     "status",
@@ -515,12 +489,12 @@
                         "type": "string"
                     },
                     "data": {
-                        "$ref": "#/components/schemas/ClientModel"
+                        "$ref": "#/components/schemas/ReclamationModel"
                     }
                 },
                 "type": "object"
             },
-            "listClientResponse": {
+            "listReclamationResponse": {
                 "required": [
                     "base_url",
                     "status",
@@ -544,31 +518,24 @@
                     "data": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/ClientModel"
+                            "$ref": "#/components/schemas/ReclamationModel"
                         }
                     }
                 },
                 "type": "object"
             },
-            "ClientModel": {
+            "ReclamationModel": {
                 "properties": {
-                    "first_name": {
-                        "type": "string"
-                    },
-                    "last_name": {
-                        "type": "string"
-                    },
                     "email": {
-                        "type": "string",
-                        "format": "email"
-                    },
-                    "login": {
-                        "type": "string"
-                    },
-                    "password": {
                         "type": "string"
                     },
                     "phone": {
+                        "type": "integer"
+                    },
+                    "subject": {
+                        "type": "string"
+                    },
+                    "message": {
                         "type": "string"
                     }
                 },
@@ -578,8 +545,8 @@
     },
     "tags": [
         {
-            "name": "Clients",
-            "description": "Clients routes"
+            "name": "Reclamation",
+            "description": "Reclamation routes"
         }
     ],
     "security": [

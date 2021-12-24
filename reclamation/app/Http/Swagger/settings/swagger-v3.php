@@ -1,8 +1,8 @@
 <?php
 /**
  * @OA\Info(
- *     title="Clients API docs",
- *     description="This is Clients API documentation",
+ *     title="Reclamation API docs",
+ *     description="This is Reclamation API documentation",
  *     version="1.0.0",
  *     @OA\Contact(
  *         email="yassine.mechiche@gmail.com"

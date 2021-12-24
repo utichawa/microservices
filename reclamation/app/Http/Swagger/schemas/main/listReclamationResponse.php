@@ -2,7 +2,7 @@
 
 /**
  * @OA\Schema(
- *   schema="detailClientResponse",
+ *   schema="listReclamationResponse",
  *   required={"base_url", "status", "message", "data"},
  *   type="object",
  *   @OA\Property(
@@ -24,8 +24,8 @@
  *     ),
  *     @OA\Property(
  *          property="data",
- *          type="object",
- *          ref="#/components/schemas/ClientModel"
+ *          type="array",
+ *          @OA\Items(ref="#/components/schemas/ReclamationModel")
  *     )
  * )
  */
