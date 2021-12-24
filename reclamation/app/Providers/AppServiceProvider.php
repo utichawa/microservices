@@ -19,9 +19,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->register(\L5Swagger\L5SwaggerServiceProvider::class);
 
         try {
-            // $client = new EurekaClient(config('eureuka.server'));
+            $client = new EurekaClient(config('eureuka.server'));
 
-            // $client->register();
+            $client->register();
         } catch (Exception $e) {
             Log::info('Failed to connect to EUREUKA');
         }
