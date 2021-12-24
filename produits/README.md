@@ -1,4 +1,4 @@
-# Client Endpoint
+# Product Endpoint
 
 ## Installation 
 
