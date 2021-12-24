@@ -83,29 +83,18 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "first_name": {
+                                    "name": {
                                         "description": "Nom",
                                         "type": "string"
                                     },
-                                    "last_name": {
-                                        "description": "Prénom",
+                                    "description": {
+                                        "description": "Description",
                                         "type": "string"
                                     },
-                                    "email": {
-                                        "description": "Email",
-                                        "type": "string",
-                                        "format": "email"
+                                    "product_id": {
+                                        "type": "integer"
                                     },
-                                    "login": {
-                                        "description": "Login",
-                                        "type": "string"
-                                    },
-                                    "password": {
-                                        "description": "Mot de passe",
-                                        "type": "string"
-                                    },
-                                    "phone": {
-                                        "description": "Téléphone",
+                                    "quantity": {
                                         "type": "string"
                                     }
                                 },
@@ -239,29 +228,18 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "first_name": {
+                                    "name": {
                                         "description": "Nom",
                                         "type": "string"
                                     },
-                                    "last_name": {
-                                        "description": "Prénom",
+                                    "description": {
+                                        "description": "Description",
                                         "type": "string"
                                     },
-                                    "email": {
-                                        "description": "Email",
-                                        "type": "string",
-                                        "format": "email"
+                                    "product_id": {
+                                        "type": "integer"
                                     },
-                                    "login": {
-                                        "description": "Login",
-                                        "type": "string"
-                                    },
-                                    "password": {
-                                        "description": "Mot de passe",
-                                        "type": "string"
-                                    },
-                                    "phone": {
-                                        "description": "Téléphone",
+                                    "quantity": {
                                         "type": "string"
                                     }
                                 },

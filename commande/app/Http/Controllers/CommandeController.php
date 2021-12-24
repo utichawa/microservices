@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCommandeRequest;
-use App\Http\Requests\UpdateCommandeRequest;
+use App\Http\Requests\CommandeRequest;
 use App\Models\Commande;
 
 class CommandeController extends Controller
@@ -72,36 +71,23 @@ class CommandeController extends Controller
      *             mediaType="application/json",
      *             @OA\Schema(
      *                  @OA\Property(
-     *                      property="first_name",
+     *                      property="name",
      *                      type="string",
      *                      description="Nom",
      *                  ),
      *                  @OA\Property(
-     *                      property="last_name",
+     *                      property="description",
      *                      type="string",
-     *                      description="Prénom",
+     *                      description="Description",
      *                  ),
      *                  @OA\Property(
-     *                      property="email",
-     *                      type="string",
-     *                      format="email",
-     *                      description="Email",
+     *                      property="product_id",
+     *                      type="integer",
      *                  ),
      *                  @OA\Property(
-     *                      property="login",
+     *                      property="quantity",
      *                      type="string",
-     *                      description="Login",
-     *                  ),
-     *                  @OA\Property(
-     *                      property="password",
-     *                      type="string",
-     *                      description="Mot de passe",
-     *                  ),
-     *                  @OA\Property(
-     *                      property="phone",
-     *                      type="string",
-     *                      description="Téléphone",
-     *                  ),
+     *                  )
      *             ),
      *         ),
      *     ),
@@ -139,7 +125,7 @@ class CommandeController extends Controller
      *     )
      * )
      */
-    public function store(StoreCommandeRequest $request)
+    public function store(CommandeRequest $request)
     {
         Commande::create($request->all());
 
@@ -226,36 +212,23 @@ class CommandeController extends Controller
      *             mediaType="application/json",
      *             @OA\Schema(
      *                  @OA\Property(
-     *                      property="first_name",
+     *                      property="name",
      *                      type="string",
      *                      description="Nom",
      *                  ),
      *                  @OA\Property(
-     *                      property="last_name",
+     *                      property="description",
      *                      type="string",
-     *                      description="Prénom",
+     *                      description="Description",
      *                  ),
      *                  @OA\Property(
-     *                      property="email",
-     *                      type="string",
-     *                      format="email",
-     *                      description="Email",
+     *                      property="product_id",
+     *                      type="integer",
      *                  ),
      *                  @OA\Property(
-     *                      property="login",
-     *                      type="string",
-     *                      description="Login",
-     *                  ),
-     *                  @OA\Property(
-     *                      property="password",
-     *                      type="string",
-     *                      description="Mot de passe",
-     *                  ),
-     *                  @OA\Property(
-     *                      property="phone",
-     *                      type="string",
-     *                      description="Téléphone",
-     *                  ),
+     *                      property="quantity",
+     *                      type="integer",
+     *                  )
      *             ),
      *         ),
      *     ),
@@ -293,7 +266,7 @@ class CommandeController extends Controller
      *     )
      * )
      */
-    public function update($id, UpdateCommandeRequest $request)
+    public function update($id, CommandeRequest $request)
     {
         $commande = Commande::find($id);
 
