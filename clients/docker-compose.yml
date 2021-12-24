@@ -52,7 +52,7 @@ services:
   gateway:
     build: ../Zuul-Gateway
     environment:
-      - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka/
+      - eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka/
     ports:
       - "8763:8763"
     image: "gateway-server"

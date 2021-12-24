@@ -14,7 +14,7 @@
     },
     "servers": [
         {
-            "url": "http://discovery:8000"
+            "url": "http://localhost/microservices/clients/public"
         }
     ],
     "paths": {

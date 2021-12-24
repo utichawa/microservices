@@ -2313,10 +2313,10 @@
                     "role": "Developer"
                 }
             ],
-            "description": "A PHP client for Spring Cloud Eureka discovery server.",
+            "description": "A PHP client for Spring Cloud Eureka localhost server.",
             "homepage": "http://hamid.work",
             "keywords": [
-                "discovery server",
+                "localhost server",
                 "eureka",
                 "php",
                 "spring cloud"
@@ -5655,7 +5655,7 @@
                 "api",
                 "json",
                 "rest",
-                "service discovery"
+                "service localhost"
             ],
             "support": {
                 "issues": "https://github.com/zircote/swagger-php/issues",
