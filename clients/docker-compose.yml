@@ -139,6 +139,49 @@ services:
      - Eureka
     networks:
       - backend
+  postgres:
+    image: postgres:12.3-alpine
+    container_name: postgres
+    ports:
+      - 5432
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - backend
+  app_produits:
+    build:
+      args:
+        user: yassine
+        uid: 1000
+      context: ../produits/
+      dockerfile: ../produits/Dockerfile
+    image: produit-service
+    container_name: produits-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ../produits/:/var/www
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka/
+      - spring.cloud.config.uri=http://config:8888
+    networks:
+      - backend
+  nginx_produit:
+    image: nginx:1.17-alpine
+    container_name: produits-nginx
+    restart: unless-stopped
+    ports:
+      - 8002:82
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx_produits:/etc/nginx/conf.d
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka/
+      - spring.cloud.config.uri=http://config:8888
+    networks:
+      - backend
 
 networks:
   backend:
