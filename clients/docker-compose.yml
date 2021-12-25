@@ -182,6 +182,38 @@ services:
       - spring.cloud.config.uri=http://config:8888
     networks:
       - backend
+  app_reclamation:
+    build:
+      args:
+        user: yassine
+        uid: 1000
+      context: ../reclamation/
+      dockerfile: ../reclamation/Dockerfile
+    image: reclamation-service
+    container_name: reclamation-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ../reclamation/:/var/www
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka/
+      - spring.cloud.config.uri=http://config:8888
+    networks:
+      - backend
+  nginx_reclamation:
+    image: nginx:1.17-alpine
+    container_name: reclamation-nginx
+    restart: unless-stopped
+    ports:
+      - 8003:83
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx_reclamation:/etc/nginx/conf.d
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka/
+      - spring.cloud.config.uri=http://config:8888
+    networks:
+      - backend
 
 networks:
   backend:
