@@ -14,7 +14,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost/microservices/clients/public"
+            "url": "http://localhost:8000"
         }
     ],
     "paths": {

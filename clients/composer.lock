@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb7a1af8826c63c3a0e67bb5b3139c35",
+    "content-hash": "cfa320ae9a65d6683543b225899090ce",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1745,6 +1745,57 @@
             "time": "2021-11-21T11:48:40+00:00"
         },
         {
+            "name": "lethanghsph/laravel-remote-config",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lethanghsph/laravel-remote-config.git",
+                "reference": "cf2a8f9db137a499ef2f2b4e7cfdbb13f1423244"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lethanghsph/laravel-remote-config/zipball/cf2a8f9db137a499ef2f2b4e7cfdbb13f1423244",
+                "reference": "cf2a8f9db137a499ef2f2b4e7cfdbb13f1423244",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Lethanghsph\\LaravelRemoteConfig\\LaravelRemoteConfigServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Helpers/Helper.php"
+                ],
+                "psr-4": {
+                    "Lethanghsph\\LaravelRemoteConfig\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "thangle",
+                    "email": "lethanghsph@gmail.com"
+                }
+            ],
+            "description": "Spring Cloud Config client for Laravel",
+            "support": {
+                "issues": "https://github.com/lethanghsph/laravel-remote-config/issues",
+                "source": "https://github.com/lethanghsph/laravel-remote-config/tree/master"
+            },
+            "time": "2019-01-30T07:10:35+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "2.3.5",
             "source": {
@@ -2316,8 +2367,8 @@
             "description": "A PHP client for Spring Cloud Eureka localhost server.",
             "homepage": "http://hamid.work",
             "keywords": [
-                "localhost server",
                 "eureka",
+                "localhost server",
                 "php",
                 "spring cloud"
             ],
@@ -8111,7 +8162,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "lethanghsph/laravel-remote-config": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

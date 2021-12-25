@@ -2,7 +2,7 @@
 
 return [
     'server' => [
-        'eurekaDefaultUrl' => 'http://localhost:8761/eureka/',
+        'eurekaDefaultUrl' => 'http://serviceregistry:8761/eureka/',
         'hostName' => 'commande-service',
         'appName' => 'commande-service',
         'ip' => 'localhost',

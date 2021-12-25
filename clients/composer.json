@@ -15,6 +15,7 @@
         "guzzlehttp/guzzle": "^6.3.1|^7.0.1",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.5",
+        "lethanghsph/laravel-remote-config": "dev-master",
         "piwvh/php-eureka": "^0.0.2"
     },
     "require-dev": {
