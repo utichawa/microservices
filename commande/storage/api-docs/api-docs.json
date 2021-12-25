@@ -14,7 +14,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost/microservices/commande/public"
+            "url": "http://localhost:8001"
         }
     ],
     "paths": {
@@ -240,7 +240,7 @@
                                         "type": "integer"
                                     },
                                     "quantity": {
-                                        "type": "string"
+                                        "type": "integer"
                                     }
                                 },
                                 "type": "object"

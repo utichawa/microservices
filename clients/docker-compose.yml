@@ -50,6 +50,38 @@ services:
       - spring.cloud.config.uri=http://config:8888
     networks:
       - backend
+  app_commande:
+    build:
+      args:
+        user: yassine
+        uid: 1000
+      context: ../commande/
+      dockerfile: ../commande/Dockerfile
+    image: commande-service
+    container_name: commandes-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ../commande/:/var/www
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka/
+      - spring.cloud.config.uri=http://config:8888
+    networks:
+      - backend
+  nginx_commande:
+    image: nginx:1.17-alpine
+    container_name: commandes-nginx
+    restart: unless-stopped
+    ports:
+      - 8001:81
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx_commande:/etc/nginx/conf.d
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://serviceregistry:8761/eureka/
+      - spring.cloud.config.uri=http://config:8888
+    networks:
+      - backend
   # Eureuka server
   Eureka:
     container_name: serviceregistry
